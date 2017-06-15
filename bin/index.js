@@ -2,9 +2,9 @@
 
 const { exec } = require('child_process')
 
-exec(`bash ${__dirname}/../replace.sh ${process.argv.slice(2).join('+')}`, () => {
+exec(`sh ${__dirname}/../replace.sh ${process.argv.slice(2).join('+')}`, () => {
 
-  exec(`bash ${__dirname}/../curl.sh`, (error, stdout, stderr) => {
+  exec(`sh ${__dirname}/../curl.sh`, (error, stdout, stderr) => {
     
     stdout = JSON.parse(stdout)
 
