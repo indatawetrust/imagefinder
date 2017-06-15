@@ -2,9 +2,9 @@
 
 const { exec } = require('child_process')
 
-exec(`sh ${__dirname}/../replace.sh ${process.argv.slice(2).join('+')}`, () => {
+exec(`/bin/sh ${__dirname}/../replace.sh ${process.argv.slice(2).join('+')}`, () => {
 
-  exec(`sh ${__dirname}/../curl.sh`, (error, stdout, stderr) => {
+  exec(`/bin/sh ${__dirname}/../curl.sh`, (error, stdout, stderr) => {
     stdout = JSON.parse(stdout)
 
     let images = decodeURIComponent(encodeURIComponent(stdout[1][1])).match(/imgurl?=(.*?)&amp;/g)
