@@ -1,6 +1,6 @@
 {
   "name": "imagefinder",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "image finder",
   "main": "lib/index.js",
   "bin": {
