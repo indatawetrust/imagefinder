@@ -1,6 +1,6 @@
 {
   "name": "imagefinder",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "image finder",
   "main": "lib/index.js",
   "bin": {
@@ -28,6 +28,7 @@
     "ava": "^0.19.1"
   },
   "dependencies": {
+    "delay": "^4.1.0",
     "puppeteer": "^1.10.0"
   }
 }
