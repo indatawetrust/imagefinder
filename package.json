@@ -1,6 +1,6 @@
 {
   "name": "imagefinder",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "image finder",
   "main": "lib/index.js",
   "bin": {
@@ -26,5 +26,8 @@
   "homepage": "https://github.com/indatawetrust/imagefinder#readme",
   "devDependencies": {
     "ava": "^0.19.1"
+  },
+  "dependencies": {
+    "puppeteer": "^1.10.0"
   }
 }

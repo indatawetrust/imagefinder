@@ -1,19 +1,31 @@
 #! /usr/bin/env node
 
-const { exec } = require('child_process')
+const puppeteer = require('puppeteer');
+const delay = require('delay');
+const url = require('url');
+const querystring = require('querystring');
 
-exec(`bash ${__dirname}/../replace.sh ${process.argv.slice(2).join('+')}`, () => {
-  
-  exec(`bash ${process.cwd()}/curl.sh`, (error, stdout, stderr) => {
-    
-    stdout = JSON.parse(stdout)
+(async () => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto(
+    `https://www.google.com/search?q=${process.argv.slice(2).join('+').replace(/ /g, '+')}`,
+  );
+  await page.click('div[role="navigation"] a:nth-child(1)');
+  await delay(1000);
+  await page.waitForSelector('#search a');
+  const stories = await page.evaluate(() => {
+    const links = Array.from(document.querySelectorAll('#search a'));
+    return links.map(link => link.href);
+  });
 
-    let images = decodeURIComponent(encodeURIComponent(stdout[1][1])).match(/imgurl?=(.*?)&amp;/g)
+  await browser.close();
 
-    console.log(JSON.stringify(images.map(image => image.slice(7).replace('&amp;', ''))))
-    
-    exec(`rm ${process.cwd()}/curl.sh`)
+  const imgs = stories
+    .map(link => querystring.parse(url.parse(link).query).imgurl)
+    .filter(img => img);
 
-  })
-
-})
+  console.log(
+    JSON.stringify(imgs),
+  );
+})();
