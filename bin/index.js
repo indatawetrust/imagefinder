@@ -9,10 +9,25 @@ const querystring = require('querystring');
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(
-    `https://www.google.com/search?q=${process.argv.slice(2).join('+').replace(/ /g, '+')}`,
+    `https://www.google.com/search?q=${process.argv
+      .slice(2)
+      .join('+')
+      .replace(/ /g, '+')}&hl=en`,
   );
-  await page.click('div[role="navigation"] a:nth-child(1)');
+
+  await page.waitForSelector('#hdtb-msb-vis');
+
+  const links = await page.evaluate(() => {
+    const links = Array.from(
+      document.querySelectorAll('#hdtb-msb-vis .hdtb-mitem'),
+    );
+    return links.map(link => link.innerText);
+  });
+  const index = links.indexOf('Images');
+  await page.click(`#hdtb-msb-vis > div:nth-child(${index+1}) > a`);
+
   await delay(1000);
+
   await page.waitForSelector('#search a');
   const stories = await page.evaluate(() => {
     const links = Array.from(document.querySelectorAll('#search a'));
@@ -25,7 +40,5 @@ const querystring = require('querystring');
     .map(link => querystring.parse(url.parse(link).query).imgurl)
     .filter(img => img);
 
-  console.log(
-    JSON.stringify(imgs),
-  );
+  console.log(JSON.stringify(imgs));
 })();
