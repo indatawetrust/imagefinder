@@ -6,25 +6,16 @@ const url = require('url');
 const querystring = require('querystring');
 
 (async () => {
-  const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
+  const browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
   const page = await browser.newPage();
   await page.goto(
     `https://www.google.com/search?q=${process.argv
       .slice(2)
       .join('+')
-      .replace(/ /g, '+')}&hl=en`,
+      .replace(/ /g, '+')}&source=lnms&tbm=isch&sa=X`,
   );
-
-  await page.waitForSelector('#hdtb-msb-vis');
-
-  const links = await page.evaluate(() => {
-    const links = Array.from(
-      document.querySelectorAll('#hdtb-msb-vis .hdtb-mitem'),
-    );
-    return links.map(link => link.innerText);
-  });
-  const index = links.indexOf('Images');
-  await page.click(`#hdtb-msb-vis > div:nth-child(${index+1}) > a`);
 
   await delay(1000);
 
