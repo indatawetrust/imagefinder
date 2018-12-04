@@ -7,6 +7,6 @@ test('#1', async t => {
     keyword: 'javascript'
   })
   
-  t.is(images.length, 100)
+  t.is(images.length, 99)
 
 })
