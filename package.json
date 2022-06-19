@@ -28,7 +28,6 @@
     "ava": "^0.19.1"
   },
   "dependencies": {
-    "delay": "^4.1.0",
-    "puppeteer": "^1.10.0"
+    "yargs": "^17.5.1"
   }
 }

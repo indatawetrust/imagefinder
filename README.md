@@ -6,7 +6,7 @@ Status](https://img.shields.io/travis/indatawetrust/imagefinder.svg)](https://tr
 ```
 npm i -g imagefinder
 
-imagefinder dark knight
+imagefinder --keyword "dark knight"
 ```
 
 or
